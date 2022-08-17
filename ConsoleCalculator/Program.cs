@@ -50,19 +50,14 @@ namespace ConsoleCalculator
 
                 string op = Console.ReadLine();
 
-                try
-                {
+         
                     result = Calculator.DoOperation(cleanNum1, cleanNum2, op);
                     if (double.IsNaN(result))
                     {
                         Console.WriteLine("This operation will result in a mathematical error.\n");
                     }
                     else Console.WriteLine("Your result: {0:0.##}\n", result);
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine("Oh no! An exception occurred trying to do the math.\n - Details: " + e.Message);
-                }
+                
 
                 Console.WriteLine("------------------------\n");
 

@@ -15,7 +15,6 @@ namespace TestProject
         [Fact]
         public void ShouldReturnResultOfSubstracting()
         {
-            Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
 
             var stringWriter = new StringWriter();
             Console.SetOut(stringWriter);
@@ -52,7 +51,6 @@ namespace TestProject
         [Fact]
         public void ShouldReturnResultOfMultWithIncorrectInput()
         {
-            Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
 
             var stringWriter = new StringWriter();
             Console.SetOut(stringWriter);
@@ -93,7 +91,6 @@ namespace TestProject
         [Fact]
         public void ShouldReturnMathError()
         {
-            Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
 
             var stringWriter = new StringWriter();
             Console.SetOut(stringWriter);
