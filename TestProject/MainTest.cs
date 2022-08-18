@@ -9,14 +9,6 @@ namespace TestProject
     public class MainTest
     {
         [Fact]
-        public void ShouldBeAbleToCreateProgram()
-        {
-            Program program = new Program();
-            program.Main(Array.Empty<string>());
-        }
-
-
-        [Fact]
         public void ShouldReturnResultOfSubstracting()
         {
 
