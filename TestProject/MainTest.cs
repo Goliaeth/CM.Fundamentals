@@ -1,35 +1,35 @@
 ﻿using System;
-using ConsoleCalculator;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
-using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.IO;
-using System.Threading;
+using Program = ConsoleCalculator.Program;
 
 namespace TestProject
 {
     public class MainTest
     {
+        [Fact]
+        public void ShouldBeAbleToCreateProgram()
+        {
+            Program program = new Program();
+            program.Main(Array.Empty<string>());
+        }
+
 
         [Fact]
         public void ShouldReturnResultOfSubstracting()
         {
 
-            var stringWriter = new StringWriter();
-            Console.SetOut(stringWriter);
+            MockConsole mockConsole = new MockConsole();
+            Program program = new Program();
+            program.MyConsole = mockConsole;
+            mockConsole.Outputs.Enqueue("15");
+            mockConsole.Outputs.Enqueue("10");
+            mockConsole.Outputs.Enqueue("s");
+            mockConsole.Outputs.Enqueue("n");
 
-            var stringBuilder = new StringBuilder();
-            stringBuilder.AppendLine("15");
-            stringBuilder.AppendLine("10");
-            stringBuilder.AppendLine("s");
-            stringBuilder.AppendLine("n");
-            var stringReader = new StringReader(stringBuilder.ToString());
-            Console.SetIn(stringReader);
+            program.RunCalculator();
 
-
-
-            ConsoleCalculator.Program.Main(new string[0]);
             var expectedResult = "Console Calculator in C#" +
                                  "------------------------" +
                                  "Type a number, and then press Enter: " +
@@ -44,7 +44,7 @@ namespace TestProject
                                  "------------------------" +
                                  "Press 'n' and Enter to close the app, or press any other key and Enter to continue: ";
 
-            Assert.Equal(expectedResult, Regex.Replace(stringWriter.ToString(), @"[\r\t\n]+", string.Empty));
+            Assert.Equal(expectedResult, Regex.Replace(mockConsole.Inputs.ToString(), @"[\r\t\n]+", string.Empty));
 
         }
 
@@ -52,22 +52,18 @@ namespace TestProject
         public void ShouldReturnResultOfMultWithIncorrectInput()
         {
 
-            var stringWriter = new StringWriter();
-            Console.SetOut(stringWriter);
+            MockConsole mockConsole = new MockConsole();
+            Program program = new Program();
+            program.MyConsole = mockConsole;
+            mockConsole.Outputs.Enqueue("dsf");
+            mockConsole.Outputs.Enqueue("15");
+            mockConsole.Outputs.Enqueue("3rwer");
+            mockConsole.Outputs.Enqueue("7");
+            mockConsole.Outputs.Enqueue("m");
+            mockConsole.Outputs.Enqueue("n");
 
-            var stringBuilder = new StringBuilder();
-            stringBuilder.AppendLine("dsf");
-            stringBuilder.AppendLine("15");
-            stringBuilder.AppendLine("3rwer");
-            stringBuilder.AppendLine("7");
-            stringBuilder.AppendLine("m");
-            stringBuilder.AppendLine("n");
-            var stringReader = new StringReader(stringBuilder.ToString());
-            Console.SetIn(stringReader);
+            program.RunCalculator();
 
-
-
-            ConsoleCalculator.Program.Main(new string[0]);
             var expectedResult = "Console Calculator in C#" +
                                  "------------------------" +
                                  "Type a number, and then press Enter: " +
@@ -84,7 +80,7 @@ namespace TestProject
                                  "------------------------" +
                                  "Press 'n' and Enter to close the app, or press any other key and Enter to continue: ";
 
-            Assert.Equal(expectedResult, Regex.Replace(stringWriter.ToString(), @"[\r\t\n]+", string.Empty));
+            Assert.Equal(expectedResult, Regex.Replace(mockConsole.Inputs.ToString(), @"[\r\t\n]+", string.Empty));
 
         }
 
@@ -92,20 +88,16 @@ namespace TestProject
         public void ShouldReturnMathError()
         {
 
-            var stringWriter = new StringWriter();
-            Console.SetOut(stringWriter);
+            MockConsole mockConsole = new MockConsole();
+            Program program = new Program();
+            program.MyConsole = mockConsole;
+            mockConsole.Outputs.Enqueue("4");
+            mockConsole.Outputs.Enqueue("0");
+            mockConsole.Outputs.Enqueue("d");
+            mockConsole.Outputs.Enqueue("n");
 
-            var stringBuilder = new StringBuilder();
-            stringBuilder.AppendLine("4");
-            stringBuilder.AppendLine("0");
-            stringBuilder.AppendLine("d");
-            stringBuilder.AppendLine("n");
-            var stringReader = new StringReader(stringBuilder.ToString());
-            Console.SetIn(stringReader);
+            program.RunCalculator();
 
-
-
-            ConsoleCalculator.Program.Main(new string[0]);
             var expectedResult = "Console Calculator in C#" +
                                  "------------------------" +
                                  "Type a number, and then press Enter: " +
@@ -120,7 +112,7 @@ namespace TestProject
                                  "------------------------" +
                                  "Press 'n' and Enter to close the app, or press any other key and Enter to continue: ";
 
-            Assert.Equal(expectedResult, Regex.Replace(stringWriter.ToString(), @"[\r\t\n]+", string.Empty));
+            Assert.Equal(expectedResult, Regex.Replace(mockConsole.Inputs.ToString(), @"[\r\t\n]+", string.Empty));
 
         }
 
